@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craving Health — Sed de Salud</title>
+<meta name="description" content="Craving Health: tu compañero diario en la recuperación de adicciones y comportamientos compulsivos. Una app cercana, hecha desde la experiencia.">
+<meta property="og:title" content="Craving Health — Sed de Salud">
+<meta property="og:description" content="El compañero diario para tu recuperación. Sin juicios. Sin promesas vacías.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a14;
+    --bg-2: #13131f;
+    --card: #18182a;
+    --border: rgba(255,255,255,0.08);
+    --primary: #7c5cfc;
+    --cyan: #22d3ee;
+    --green: #4ade80;
+    --text: #f0f0ff;
+    --muted: #8b8ba8;
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'Inter', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    font-weight: 400;
+  }
+  /* Background atmosphere */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 600px at 10% 0%, rgba(124,92,252,0.15), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(34,211,238,0.12), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 50% 100%, rgba(74,222,128,0.08), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 1;
+  }
+  main, header, section, footer { position: relative; z-index: 2; }
+
+  /* HEADER */
+  header {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 20px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    backdrop-filter: blur(20px);
+    background: rgba(10,10,20,0.7);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+  .logo {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-mark {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--green), var(--cyan));
+    border-radius: 8px;
+    position: relative;
+  }
+  .logo-mark::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1.5px solid rgba(0,0,0,0.4);
+    border-radius: 4px;
+    border-bottom: none;
+    border-right: none;
+  }
+  .lang-toggle {
+    display: flex; gap: 4px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px;
+  }
+  .lang-toggle button {
+    background: none; border: none;
+    padding: 6px 14px;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--body);
+    transition: all 0.2s;
+  }
+  .lang-toggle button.active {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 32px;
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.02);
+    animation: fadeInUp 0.8s ease-out;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+    background: linear-gradient(180deg, var(--text) 0%, rgba(240,240,255,0.6) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInUp 1s ease-out 0.1s both;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(135deg, var(--green), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-tagline {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-weight: 400;
+    animation: fadeInUp 1s ease-out 0.2s both;
+  }
+  .hero-sub {
+    max-width: 540px;
+    font-size: 17px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    line-height: 1.6;
+    animation: fadeInUp 1s ease-out 0.3s both;
+  }
+  .cta-group {
+    display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+    animation: fadeInUp 1s ease-out 0.4s both;
+  }
+  .btn {
+    padding: 16px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border: none;
+    font-family: var(--body);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--cyan));
+    color: white;
+    box-shadow: 0 8px 32px rgba(124,92,252,0.4);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(124,92,252,0.55);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  /* SECTIONS */
+  section.content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 32px;
+  }
+  .section-tag {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    max-width: 800px;
+  }
+  h2 em {
+    font-style: italic;
+    color: var(--green);
+    font-weight: 400;
+  }
+  .lead {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 640px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
+
+  /* PROBLEM SECTION */
+  .problem {
+    border-top: 1px solid var(--border);
+  }
+  .problem-quote {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    line-height: 1.3;
+    color: var(--text);
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 0;
+    text-align: center;
+    position: relative;
+  }
+  .problem-quote::before {
+    content: '"';
+    position: absolute;
+    left: -20px; top: -10px;
+    font-size: 8rem;
+    color: var(--green);
+    opacity: 0.15;
+    font-family: var(--display);
+  }
+  .problem-quote span {
+    color: var(--green);
+    font-weight: 400;
+  }
+
+  /* SOLUTION FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 48px;
+  }
+  .feature {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature:hover {
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-2px);
+  }
+  .feature::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feature:hover::before { opacity: 1; }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(124,92,252,0.2), rgba(34,211,238,0.15));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .feature h3 {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .feature p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HOW IT WORKS */
+  .how {
+    border-top: 1px solid var(--border);
+  }
+  .steps {
+    display: flex; flex-direction: column;
+    gap: 0;
+    margin-top: 48px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--green);
+    line-height: 1;
+  }
+  .step-content h3 {
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .step-content p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  /* CTA FINAL */
+  .cta-final {
+    text-align: center;
+    padding: 120px 32px;
+    border-top: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 600px 300px at 50% 0%, rgba(74,222,128,0.1), transparent 70%);
+  }
+  .cta-final h2 {
+    margin: 0 auto 24px;
+  }
+  .cta-final .lead {
+    margin: 0 auto 40px;
+  }
+
+  /* INVESTORS */
+  .investors {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 32px;
+    text-align: center;
+  }
+  .investors-inner { max-width: 700px; margin: 0 auto; }
+  .investors h3 {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .investors p {
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-size: 16px;
+  }
+  .email-link {
+    display: inline-block;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(34,211,238,0.3);
+    padding-bottom: 4px;
+    transition: all 0.2s;
+  }
+  .email-link:hover {
+    color: var(--text);
+    border-bottom-color: var(--text);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px 32px 40px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  .disclaimer {
+    max-width: 640px;
+    margin: 0 auto 32px;
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .footer-meta {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .footer-meta a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    header { padding: 16px 20px; }
+    .logo { font-size: 18px; }
+    .step { grid-template-columns: 60px 1fr; gap: 20px; }
+    .step-num { font-size: 42px; }
+    section.content { padding: 70px 20px; }
+    .investors, .cta-final { padding: 70px 20px; }
+  }
+
+  /* Hide language */
+  [data-en] { display: none; }
+  body.en [data-es] { display: none; }
+  body.en [data-en] { display: inline; }
+  body.en .features-grid [data-en] { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">
+    <div class="logo-mark"></div>
+    <span>Craving Health</span>
+  </a>
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('es')">ES</button>
+    <button onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="hero-tag" data-es>Sed de Salud</span>
+    <span class="hero-tag" data-en>A thirst for health</span>
+
+    <h1>
+      <span data-es>El compañero diario<br>para tu <em>recuperación</em></span>
+      <span data-en>Your daily companion<br>for your <em>recovery</em></span>
+    </h1>
+
+    <p class="hero-tagline">
+      <span data-es>Sin juicios. Sin promesas vacías.</span>
+      <span data-en>No judgment. No empty promises.</span>
+    </p>
+
+    <p class="hero-sub">
+      <span data-es>Una app cercana, hecha desde la experiencia. Para personas que conviven cada día con una adicción o un comportamiento compulsivo.</span>
+      <span data-en>A close-by app, built from lived experience. For people who deal with addiction or compulsive behavior every single day.</span>
+    </p>
+
+    <div class="cta-group">
+      <a href="https://craving-health.vercel.app" class="btn btn-primary" target="_blank">
+        <span data-es>Probar la app</span>
+        <span data-en>Try the app</span>
+        →
+      </a>
+      <a href="#como" class="btn btn-secondary">
+        <span data-es>Cómo funciona</span>
+        <span data-en>How it works</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="content problem reveal" id="problema">
+    <div class="section-tag">
+      <span data-es>El problema</span>
+      <span data-en>The problem</span>
+    </div>
+    <h2>
+      <span data-es>La adicción es una enfermedad <em>del olvido</em>.</span>
+      <span data-en>Addiction is a disease <em>of forgetting</em>.</span>
+    </h2>
+    <p class="lead">
+      <span data-es>Olvidamos el daño. Olvidamos la promesa que nos hicimos. Olvidamos por qué empezamos. El momento crítico no es el comportamiento compulsivo en sí, sino el segundo antes — cuando la motivación desaparece.</span>
+      <span data-en>We forget the damage. We forget the promise we made to ourselves. We forget why we started. The critical moment isn't the compulsive behavior itself, but the second before — when the motivation vanishes.</span>
+    </p>
+    <div class="problem-quote">
+      <span data-es>"Cada día, millones de personas pierden esa batalla en silencio. <span>Sin acompañamiento. Sin recordatorios. Solas.</span>"</span>
+      <span data-en>"Every day, millions of people lose that battle in silence. <span>Without support. Without reminders. Alone.</span>"</span>
+    </div>
+  </section>
+
+  <section class="content reveal" id="solucion">
+    <div class="section-tag">
+      <span data-es>La solución</span>
+      <span data-en>The solution</span>
+    </div>
+    <h2>
+      <span data-es>No vendemos cambio. <em>Acompañamos en la cronicidad.</em></span>
+      <span data-en>We don't sell change. <em>We walk with you through chronicity.</em></span>
+    </h2>
+    <p class="lead">
+      <span data-es>No prometemos sobriedad rápida. No prometemos curaciones. Construimos la herramienta diaria que sostiene a quien convive con una compulsión.</span>
+      <span data-en>We don't promise quick sobriety. We don't promise cures. We build the daily tool that holds whoever lives with a compulsion.</span>
+    </p>
+
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">🆘</div>
+        <h3>
+          <span data-es>Botón SOS</span>
+          <span data-en>SOS button</span>
+        </h3>
+        <p>
+          <span data-es>Acceso inmediato a líneas de ayuda y contactos de confianza en momentos de crisis. Sin pasos, sin barreras.</span>
+          <span data-en>Immediate access to help lines and trusted contacts in moments of crisis. No steps, no barriers.</span>
+        </p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🖤</div>
+        <h3>
+          <span data-es>Foto negra</span>
+          <span data-en>Black photo</span>
+        </h3>
+        <p>
+          <span data-es>Imágenes que recuerdan el daño real, listas para mirar cuando la mente intenta olvidar las consecuencias.</span>
+          <span data-en>Images that remind you of the real damage, ready to look at when the mind tries to forget the consequences.</span>
+        </p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💙</div>
+        <h3>
+          <span data-es>Anclaje emocional</span>
+          <span data-en>Emotional anchor</span>
+        </h3>
+        <p>
+          <span data-es>Tus motivos para seguir, en imagen. Aquellos por quienes lo haces. Para no olvidar.</span>
+          <span data-en>Your reasons to keep going, in pictures. The people you do it for. So you never forget.</span>
+        </p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🧘</div>
+        <h3>
+          <span data-es>Meditaciones guiadas</span>
+          <span data-en>Guided meditations</span>
+        </h3>
+        <p>
+          <span data-es>Cinco prácticas breves para los momentos clave del día. Cada una con su atmósfera visual única.</span>
+          <span data-en>Five short practices for key moments of the day. Each one with its own unique visual atmosphere.</span>
+        </p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📖</div>
+        <h3>
+          <span data-es>Diario emocional</span>
+          <span data-en>Emotional journal</span>
+        </h3>
+        <p>
+          <span data-es>Hacer consciente lo que se siente desactiva la urgencia. Un espacio privado, día a día.</span>
+          <span data-en>Bringing what you feel into awareness defuses the urge. A private space, day by day.</span>
+        </p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🌳</div>
+        <h3>
+          <span data-es>Tu árbol y tu cielo</span>
+          <span data-en>Your tree and your sky</span>
+        </h3>
+        <p>
+          <span data-es>Cada día limpio es una estrella en tu cielo. Tu árbol crece contigo. La metáfora hecha visible.</span>
+          <span data-en>Every clean day is a star in your sky. Your tree grows with you. The metaphor made visible.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content how reveal" id="como">
+    <div class="section-tag">
+      <span data-es>Cómo funciona</span>
+      <span data-en>How it works</span>
+    </div>
+    <h2>
+      <span data-es>Tres minutos al día. <em>Toda la diferencia.</em></span>
+      <span data-en>Three minutes a day. <em>All the difference.</em></span>
+    </h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">i</div>
+        <div class="step-content">
+          <h3>
+            <span data-es>Configura tu fecha</span>
+            <span data-en>Set your date</span>
+          </h3>
+          <p>
+            <span data-es>Marcas el día en que empezó tu camino. Desde ese momento, la app cuenta contigo cada día.</span>
+            <span data-en>You mark the day your path began. From that moment, the app counts every single day with you.</span>
+          </p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">ii</div>
+        <div class="step-content">
+          <h3>
+            <span data-es>Sube tus anclajes</span>
+            <span data-en>Upload your anchors</span>
+          </h3>
+          <p>
+            <span data-es>Fotos de tus motivos para seguir, imágenes del daño que quieres recordar, contactos de confianza, tu música anti-craving. Todo en un solo lugar.</span>
+            <span data-en>Photos of your reasons to keep going, images of the damage you want to remember, trusted contacts, your anti-craving music. All in one place.</span>
+          </p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">iii</div>
+        <div class="step-content">
+          <h3>
+            <span data-es>Vuelve cuando lo necesites</span>
+            <span data-en>Come back when you need it</span>
+          </h3>
+          <p>
+            <span data-es>En el momento del impulso, abres la app. SOS, foto negra, meditación, llamada. La fricción desaparece. La motivación vuelve.</span>
+            <span data-en>In the moment of impulse, you open the app. SOS, black photo, meditation, call. Friction disappears. Motivation returns.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final reveal">
+    <h2>
+      <span data-es>Empieza ahora.<br><em>Es gratis.</em></span>
+      <span data-en>Start now.<br><em>It's free.</em></span>
+    </h2>
+    <p class="lead">
+      <span data-es>Sin compromiso. Sin tarjeta. Sin promesas que no podemos cumplir.</span>
+      <span data-en>No commitment. No card. No promises we can't keep.</span>
+    </p>
+    <a href="https://craving-health.vercel.app" class="btn btn-primary" target="_blank">
+      <span data-es>Acceder a la app</span>
+      <span data-en>Go to the app</span>
+      →
+    </a>
+  </section>
+
+  <section class="investors">
+    <div class="investors-inner">
+      <h3>
+        <span data-es>¿Eres inversor o periodista?</span>
+        <span data-en>Are you an investor or journalist?</span>
+      </h3>
+      <p>
+        <span data-es>Estamos levantando ronda seed. Si quieres conocer la visión, las métricas y el plan, escríbenos.</span>
+        <span data-en>We're raising seed round. If you want to know the vision, metrics and plan, write to us.</span>
+      </p>
+      <a href="mailto:joseojea01@gmail.com?subject=Craving%20Health%20%E2%80%94%20Investor%20inquiry" class="email-link">joseojea01@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="disclaimer">
+    <span data-es><strong>Aviso médico.</strong> Craving Health no es un dispositivo médico ni sustituye atención profesional. Si estás en crisis o experimentas ideación suicida, contacta con servicios de emergencia (112) o el Teléfono de la Esperanza (717 003 717).</span>
+    <span data-en><strong>Medical disclaimer.</strong> Craving Health is not a medical device and does not replace professional care. If you are in crisis or experiencing suicidal ideation, contact emergency services (112) or a crisis line in your country.</span>
+  </div>
+  <p class="footer-meta">
+    © 2026 Craving Health · <a href="mailto:joseojea01@gmail.com">joseojea01@gmail.com</a>
+  </p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('en', lang === 'en');
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-toggle button').forEach(b => {
+      b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+    });
+    localStorage.setItem('lang', lang);
+  }
+
+  // Restore language preference
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang === 'en') setLang('en');
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
